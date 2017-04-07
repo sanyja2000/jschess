@@ -47,12 +47,12 @@ function drawTable(){
 	ctx.fillStyle="white";
 	for(var y = 0; y < 2; y++){
 	for(var x = 0; x < 8; x++){
-		ctx.fillText(x+1,padding+x*cellW+cellW/2,[padding*0.8,padding*1.8+cellW*8][y]);
+		ctx.fillText(abc[x],padding+x*cellW+cellW/2,[padding*0.8,padding*1.8+cellW*8][y]);
 	}
 	}
 	for(var x = 0; x < 2; x++){
 	for(var y = 0; y < 8; y++){
-		ctx.fillText(abc[y],[padding*0.5,padding*1.5+cellW*8][x],padding+cellW*y+cellW*0.8);
+		ctx.fillText(y+1,[padding*0.5,padding*1.5+cellW*8][x],padding+cellW*y+cellW*0.8);
 	}
 	}
 }
@@ -73,9 +73,10 @@ function Piece(defPos,piece,color){
 			ctx.fillStyle = "black";
 			ctx.strokeStyle = "white";	
 		}
+		var posy = padding+(this.pos[1]-1)*cellH;
+		var posx = padding+abc.indexOf(this.pos[0])*cellW;
 		ctx.beginPath();
-
-		ctx.arc(padding+(this.pos[1]-1)*cellW+cellW*0.5,(padding+abc.indexOf(this.pos[0])*cellH+cellH*0.5),cellW*0.4,0,2*Math.PI);
+		ctx.arc(posx+cellW*0.5,posy+cellW*0.5,cellW*0.4,0,2*Math.PI);
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
@@ -85,23 +86,23 @@ function Piece(defPos,piece,color){
 		else{
 			ctx.fillStyle = "black";	
 		}
-		ctx.fillText(this.type,padding+(this.pos[1]-1)*cellW+cellW*0.5,(padding+abc.indexOf(this.pos[0])*cellH+cellH*0.75));
+		ctx.fillText(this.type,posx+cellW*0.5,posy+cellH*0.75);
 	}
 
 }
 
 mycolor = "w";
 var mypieces = [
-	new Piece("G1","P",mycolor),
-	new Piece("G2","P",mycolor),
-	new Piece("G3","P",mycolor),
-	new Piece("G4","P",mycolor),
-	new Piece("G5","P",mycolor),
-	new Piece("G6","P",mycolor),
+	new Piece("A7","P",mycolor),
+	new Piece("B7","P",mycolor),
+	new Piece("C7","P",mycolor),
+	new Piece("D7","P",mycolor),
+	new Piece("E7","P",mycolor),
+	new Piece("F7","P",mycolor),
 	new Piece("G7","P",mycolor),
-	new Piece("G8","P",mycolor),
-	new Piece("G1","Q",mycolor),
-	
+	new Piece("H7","P",mycolor),
+	new Piece("A8","B",mycolor),
+	new Piece("H8","B",mycolor),
 
 
 ];
