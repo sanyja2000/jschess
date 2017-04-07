@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Chess</title>
+<style>
+table {width:100%;height:100%}
+td {text-align:center;vertical-align:middle}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td>
+<canvas id="mycanvas"></canvas>
+</td>
+</tr>
+</table>
+<script>
+var canvas = document.getElementById("mycanvas");
+var ctx = canvas.getContext("2d");
+
+var size = 700;
+
+var WIDTH = canvas.width = size;
+var HEIGHT = canvas.height = size;
+
+var padding = 50;
+
+var cellW = (WIDTH-padding*2)/8;
+var cellH = (HEIGHT-padding*2)/8;
+
+var abc = "ABCDEFGH";
+ctx.font = "40px Arial"
+
+function drawTable(){
+	ctx.fillStyle = "brown";
+	ctx.fillRect(0,0,WIDTH,HEIGHT);
+	for(var x=0; x < 8; x++) {
+	for(var y=0; y < 8; y++) {
+		if((x+y)%2==0){
+			ctx.fillStyle = "white";	
+		}
+		else {ctx.fillStyle = "black"}
+		ctx.fillRect(padding+x*cellW,padding+y*cellH,cellW,cellH);
+	}
+	}
+	ctx.textAlign = "center";
+	ctx.fillStyle="white";
+	for(var y = 0; y < 2; y++){
+	for(var x = 0; x < 8; x++){
+		ctx.fillText(x+1,padding+x*cellW+cellW/2,[padding*0.8,padding*1.8+cellW*8][y]);
+	}
+	}
+	for(var x = 0; x < 2; x++){
+	for(var y = 0; y < 8; y++){
+		ctx.fillText(abc[y],[padding*0.5,padding*1.5+cellW*8][x],padding+cellW*y+cellW*0.8);
+	}
+	}
+}
+
+//A1 = "00", G8 = "77"
+
+
+function Piece(defPos,piece,color){
+	this.pos = defPos;
+	this.type = piece;
+	this.color = color;
+	this.show = function(){
+		if(this.color == "w"){
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "black";		
+		}
+		else{
+			ctx.fillStyle = "black";
+			ctx.strokeStyle = "white";	
+		}
+		ctx.beginPath();
+
+		ctx.arc(padding+(this.pos[1]-1)*cellW+cellW*0.5,(padding+abc.indexOf(this.pos[0])*cellH+cellH*0.5),cellW*0.4,0,2*Math.PI);
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		if(this.color == "b"){
+			ctx.fillStyle = "white";		
+		}
+		else{
+			ctx.fillStyle = "black";	
+		}
+		ctx.fillText(this.type,padding+(this.pos[1]-1)*cellW+cellW*0.5,(padding+abc.indexOf(this.pos[0])*cellH+cellH*0.75));
+	}
+
+}
+
+mycolor = "w";
+var mypieces = [
+	new Piece("G1","P",mycolor),
+	new Piece("G2","P",mycolor),
+	new Piece("G3","P",mycolor),
+	new Piece("G4","P",mycolor),
+	new Piece("G5","P",mycolor),
+	new Piece("G6","P",mycolor),
+	new Piece("G7","P",mycolor),
+	new Piece("G8","P",mycolor),
+	new Piece("G1","Q",mycolor),
+	
+
+
+];
+var enpieces = [];
+
+function update(){
+	drawTable();
+	for(var i = 0; i<mypieces.length;i++){
+		mypieces[i].show();
+	}
+	for(var i = 0; i<enpieces.length;i++){
+		enpieces[i].show();
+	}
+}
+
+var gameloop = setInterval(update,1000/30);
+</script>
+</body>
+</html>
